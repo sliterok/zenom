@@ -1,0 +1,27 @@
+{
+  "name": "spa-framework-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node dev.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.4.1",
+    "spa-framework": "workspace:*",
+    "vite": "^6.2.4"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4"
+  }
+}
