@@ -4,7 +4,10 @@
   "private": true,
   "description": "Monorepo for SPA Framework and its test application",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm --filter spa-framework build",
+    "build:framework": "pnpm --filter spa-framework build",
+    "start:test-app": "pnpm --filter spa-framework-test start",
+    "dev:test-app": "pnpm --filter spa-framework-test dev"
   },
   "keywords": [],
   "author": "",

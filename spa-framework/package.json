@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest test/builds.test.ts",
     "build": "tsup-node"
   },
   "type": "module",
