@@ -1,8 +1,8 @@
 {
   "name": "zenom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": {
     "zenom": "./dist/cli.js"
   },
@@ -13,6 +13,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "private": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,5 +37,8 @@
   },
   "dependencies": {
     "commander": "^13.1.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
