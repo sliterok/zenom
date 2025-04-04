@@ -1,31 +1,37 @@
 #!/usr/bin/env node
+import { Command } from "commander";
 import { dev } from "./dev.js";
-import { build, serve } from "./build.js"; // Assuming build function exists or will be added
+import { build, serve } from "./build.js";
 import { loadConfig } from "./config.js";
+import type { ServeOptions } from "./types.js"; // Assuming types are defined here
 
-const args = process.argv.slice(2);
-const command = args[0];
-
-async function run() {
-  const config = await loadConfig(); // Load configuration
-
-  if (command === "dev") {
+const program = new Command();
+program
+  .command("dev")
+  .description("Start development server")
+  .action(async () => {
+    const config = await loadConfig();
     console.log("Starting development server...");
     await dev(config);
-  } else if (command === "build") {
-    console.log("Building project...");
-    await build(config); // Call build function with config
-  } else if (command === "serve") {
-    console.log("Serving project...");
-    await serve();
-  } else {
-    console.error(`Unknown command: ${command}`);
-    console.log("Available commands: dev, build, serve");
-    process.exit(1);
-  }
-}
+  });
 
-run().catch((err) => {
-  console.error("An error occurred:", err);
-  process.exit(1);
-});
+program
+  .command("build")
+  .description("Build the project")
+  .action(async () => {
+    const config = await loadConfig();
+    console.log("Building project...");
+    await build(config);
+  });
+
+program
+  .command("serve")
+  .description("Serve the built project")
+  .option("-d, --distPath <path>", "Path to the dist folder", "./dist")
+  .action(async (options: ServeOptions) => {
+    // Added type annotation
+    console.log("Serving project...");
+    await serve(options.distPath);
+  });
+
+program.parse(process.argv);
