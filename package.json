@@ -1,14 +1,14 @@
 {
-  "name": "spa-framework-monorepo",
+  "name": "zenom-monorepo",
   "version": "1.0.0",
   "private": true,
-  "description": "Monorepo for SPA Framework and its test application",
+  "description": "Monorepo for Zenom Framework and its test application",
   "scripts": {
-    "build": "pnpm --filter spa-framework build",
-    "build:framework": "pnpm --filter spa-framework build",
-    "build:test-app": "pnpm --filter spa-framework-test build",
-    "serve:test-app": "pnpm --filter spa-framework-test serve",
-    "dev:test-app": "pnpm --filter spa-framework-test dev"
+    "build": "pnpm --filter zenom build",
+    "build:framework": "pnpm --filter zenom build",
+    "build:test-app": "pnpm --filter zenom-test build",
+    "serve:test-app": "pnpm --filter zenom-test serve",
+    "dev:test-app": "pnpm --filter zenom-test dev"
   },
   "keywords": [],
   "author": "",

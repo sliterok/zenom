@@ -1,19 +1,19 @@
 {
-  "name": "spa-framework-test",
+  "name": "zenom-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "spa-framework build",
-    "serve": "spa-framework serve",
-    "dev": "spa-framework dev"
+    "build": "zenom build",
+    "serve": "zenom serve",
+    "dev": "zenom dev"
   },
   "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependenciesMeta": {
-    "spa-framework": {
+    "zenom": {
       "injected": true
     }
   },
@@ -22,7 +22,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.4.1",
-    "spa-framework": "workspace:*",
+    "zenom": "workspace:*",
     "vite": "^6.2.4"
   },
   "devDependencies": {

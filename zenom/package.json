@@ -1,10 +1,10 @@
 {
-  "name": "spa-framework",
+  "name": "zenom",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin": {
-    "spa-framework": "./dist/cli.js"
+    "zenom": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsup-node"
