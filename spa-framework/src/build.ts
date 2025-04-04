@@ -1,15 +1,16 @@
-import { build as viteBuild, type InlineConfig } from "vite";
+import { build as viteBuild, type InlineConfig, UserConfig } from "vite";
 import { type RollupOutput } from "rollup";
 import { pathToFileURL } from "node:url";
 import express, { Express } from "express";
-import { IOptions, IBuildResult } from "./types";
-import { getConfig } from "./config";
+import { IBuildResult } from "./types";
 
-export async function build(
-  opts?: IOptions,
-  viteConfig?: InlineConfig
-): Promise<IBuildResult> {
-  const { clientConfig, serverConfig } = getConfig(opts, viteConfig);
+interface BuildConfig {
+  clientConfig: InlineConfig;
+  serverConfig: InlineConfig;
+}
+
+export async function build(config: BuildConfig): Promise<IBuildResult> {
+  const { clientConfig, serverConfig } = config;
 
   const [clientOutput, serverOutput] = (await Promise.all([
     viteBuild(clientConfig),

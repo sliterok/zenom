@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node dev.js"
+    "build": "spa-framework build",
+    "serve": "spa-framework serve",
+    "dev": "spa-framework dev"
   },
   "type": "module",
   "keywords": [],

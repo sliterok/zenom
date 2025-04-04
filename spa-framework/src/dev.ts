@@ -1,9 +1,16 @@
-import { type InlineConfig, createServer } from "vite";
-import { IOptions } from "./types";
-import { getConfig } from "./config";
+import { type InlineConfig, createServer, ViteDevServer } from "vite";
 
-export async function dev(opts?: IOptions, viteConfig?: InlineConfig) {
-  const { clientConfig, serverConfig } = getConfig(opts, viteConfig);
+// Define the expected config structure directly
+interface DevConfig {
+  clientConfig: InlineConfig;
+  serverConfig: InlineConfig;
+}
+
+export async function dev(
+  config: DevConfig
+): Promise<{ clientServer: ViteDevServer; apiServer: ViteDevServer }> {
+  // No longer need to call getConfig here, use the provided configs
+  const { clientConfig, serverConfig } = config;
 
   const [clientServer, apiServer] = await Promise.all([
     createServer(clientConfig),

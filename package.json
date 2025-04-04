@@ -6,7 +6,8 @@
   "scripts": {
     "build": "pnpm --filter spa-framework build",
     "build:framework": "pnpm --filter spa-framework build",
-    "start:test-app": "pnpm --filter spa-framework-test start",
+    "build:test-app": "pnpm --filter spa-framework-test build",
+    "serve:test-app": "pnpm --filter spa-framework-test serve",
     "dev:test-app": "pnpm --filter spa-framework-test dev"
   },
   "keywords": [],
