@@ -64,6 +64,12 @@ pnpm build
 pnpm serve
 ```
 
+## Example Project
+
+An example project demonstrating how to use Zenom can be found in the monorepo:
+
+- [`zenom-test/`](https://github.com/sliterok/zenom/tree/main/zenom-test)
+
 ## Repository
 
 Find the source code and contribute on GitHub: [https://github.com/sliterok/zenom/tree/main/zenom](https://github.com/sliterok/zenom/tree/main/zenom)
