@@ -1,40 +1,71 @@
-# zenom: A Vite-based Full-Stack SPA Toolchain
+# Zenom Framework (`zenom`)
 
-`zenom` is a streamlined toolchain built on [Vite](https://vitejs.dev/) for developing and building full-stack Single Page Applications (SPAs). It simplifies the process by providing pre-configured setups for React frontends and Express backends, handling separate build processes and development servers, and including API request proxying.
+This package contains the core Zenom framework, a toolchain designed for building modern Single Page Applications (SPAs). It provides a command-line interface (CLI) and utilities for development, building, and serving your application.
 
-## Key Features
+## Features
 
-- **Simplified Setup:** Pre-configured Vite setup for React frontend and Express backend. Minimizes initial configuration overhead.
-- **Hot Reloading:** Fast development with hot module replacement for both client and server. Enables rapid iteration and debugging.
-- **API Proxying:** Seamless integration between client and server during development. Simplifies API calls during development.
-- **Optimized Builds:** Production-ready builds for deployment. Creates optimized bundles for production environments.
-- **Clean Architecture:** Clear separation of concerns between frontend and backend. Promotes maintainability and scalability.
+- Integrated development server with Hot Module Replacement (HMR).
+- Optimized production builds using Vite.
+- Static file serving for built applications.
+- Configuration loading (`zenom.config.js` or `zenom.config.ts`).
 
-## Getting Started
+## Installation
 
-1. **Prerequisites:** Ensure you have Node.js and pnpm installed.
+Zenom is intended to be used as a dependency within your SPA project. Install it using your preferred package manager:
 
-2. **Installation:** This package is part of a monorepo. Install dependencies using `pnpm install` in the root directory.
+```bash
+pnpm add zenom -D
+# or
+npm install zenom --save-dev
+# or
+yarn add zenom -D
+```
 
-3. **Build:** Build the `zenom` package using `pnpm run build` (or `pnpm run build:framework`) in the root directory.
-
-4. **Usage:** After building, the `zenom` CLI is available. See the CLI Usage section below.
-
-## CLI Usage
+## CLI Commands
 
 The `zenom` CLI provides the following commands:
 
-- `zenom dev`: Starts the development server.
+- **`zenom dev`**
 
-- `zenom build`: Builds the application for production.
+  - Starts the development server for your project.
+  - Loads configuration from `zenom.config.js` or `zenom.config.ts`.
+  - Enables HMR for a fast development experience.
 
-- `zenom serve [options]`: Serves the application for production. Options include:
-  - `--distPath <path>`: Path to the dist folder (defaults to `./dist`).
+- **`zenom build`**
 
-## Contributing
+  - Builds your project for production.
+  - Loads configuration from `zenom.config.js` or `zenom.config.ts`.
+  - Outputs optimized assets typically to a `dist/` directory (configurable).
 
-Contributions are welcome! Please open an issue or submit a pull request.
+- **`zenom serve`**
+  - Serves the previously built production assets.
+  - Useful for previewing the production build locally.
+  - `--distPath <path>`: Specifies the path to the distribution folder (defaults to `./dist`).
 
-## License
+## Usage Example (within a project)
 
-[MIT](../../LICENSE)
+Add scripts to your project's `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "zenom dev",
+    "build": "zenom build",
+    "serve": "zenom serve"
+  }
+}
+```
+
+Then run the commands:
+
+```bash
+pnpm dev
+pnpm build
+pnpm serve
+```
+
+## Repository
+
+Find the source code and contribute on GitHub: [https://github.com/sliterok/zenom/tree/main/zenom](https://github.com/sliterok/zenom/tree/main/zenom)
+
+Refer to the main project [README](../README.md) for the overall monorepo structure.

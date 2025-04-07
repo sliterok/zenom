@@ -1,10 +1,14 @@
 {
   "name": "zenom",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "./dist/index.js",
   "bin": {
     "zenom": "./dist/cli.js"
+  },
+  "homepage": "https://github.com/sliterok/zenom#readme",
+  "bugs": {
+    "url": "https://github.com/sliterok/zenom/issues"
   },
   "scripts": {
     "build": "tsup-node"

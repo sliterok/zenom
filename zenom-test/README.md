@@ -1,39 +1,66 @@
-# SPA Framework Test Application
+# Zenom Test Application (`zenom-test`)
 
-This package serves as a test and demonstration application for the `zenom`.
+This package serves as an example application demonstrating how to build a full-stack Single Page Application (SPA) using the `zenom` framework.
 
 ## Purpose
 
-The primary goal of this application is to showcase how to structure and run a full-stack SPA using the `Zenom`. It utilizes the framework's build and development functionalities.
+The primary goal is to showcase the features and usage patterns of `zenom`, including:
+
+- Project structure for client and server code.
+- Configuration using `zenom.config.js` or `zenom.config.ts` (though not explicitly present in this simple example, `zenom` would load it if found).
+- Running the development server (`zenom dev`).
+- Building for production (`zenom build`).
+- Serving the production build (`zenom serve`).
 
 ## Structure
 
 - **`client/`**: Contains the frontend React application.
-  - `src/App.tsx`: The main application component, demonstrating basic routing with `react-router` and state management.
-  - `src/main.tsx`: The entry point for the client application.
+  - `index.html`: The main HTML entry point.
+  - `src/main.tsx`: The entry point for the React application.
+  - `src/App.tsx`: The root React component, demonstrating basic UI.
+  - `public/`: Static assets.
 - **`server/`**: Contains the backend Express application.
-  - `index.ts`: Defines a simple Express app with a basic `/api` endpoint, exporting the `app` instance as required by the `zenom`.
-- **`package.json`**: Defines dependencies (React, Express, `zenom`, etc.) and scripts (`start`, `dev`) that utilize the `zenom` CLI.
+  - `index.ts`: Defines a simple Express server, exporting the `app` instance as required by `zenom`'s development server integration.
+- **`package.json`**: Defines dependencies (React, Express, `zenom` via workspace protocol) and scripts that utilize the `zenom` CLI.
+- **`tsconfig.*.json`**: TypeScript configuration files for the client and server.
 
 ## Running the Application
 
-This application is intended to be run from the **root of the monorepo** using the scripts defined in the root `package.json`:
+Ensure you have installed dependencies from the **monorepo root** first:
+
+```bash
+# From the monorepo root
+pnpm install
+```
+
+Then, navigate to this directory (`zenom-test`) and use the following scripts:
 
 - **Development Mode:**
 
   ```bash
-  # From the monorepo root
-  pnpm run dev:test-app
+  pnpm dev
   ```
 
-  This starts Vite development servers for both the client (port 3000) and server (port 3001) with hot-reloading.
+  This executes `zenom dev`, starting the integrated development environment with HMR for both client and server code.
 
-- **Production Mode:**
+- **Build for Production:**
+
   ```bash
-  # From the monorepo root
-  # Ensure zenom is built first: pnpm run build
-  pnpm run start:test-app
+  pnpm build
   ```
-  This builds optimized client and server bundles using the `zenom` and serves the application on port 3000.
 
-Refer to the main [monorepo README](../README.md) for more details on setup and overall project structure.
+  This executes `zenom build`, creating optimized production bundles for the client and server in the `dist/` directory.
+
+- **Serve Production Build:**
+
+  ```bash
+  pnpm serve
+  ```
+
+  This executes `zenom serve`, serving the contents of the `dist/` folder (created by `pnpm build`) locally, typically on port 3000.
+
+## Repository
+
+Find the source code and contribute on GitHub: [https://github.com/sliterok/zenom/tree/main/zenom-test](https://github.com/sliterok/zenom/tree/main/zenom-test)
+
+Refer to the main project [README](../README.md) for the overall monorepo structure.
