@@ -40,7 +40,8 @@ export async function serve(distPath = "dist") {
     next();
   });
 
-  app.use(express.static("./dist/client"));
+  // 5 min cache
+  app.use(express.static("./dist/client", { maxAge: 300_000 }));
 
   app.listen(3000);
 }
