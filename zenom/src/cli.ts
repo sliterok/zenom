@@ -30,27 +30,56 @@ program
   .description("Serve the built project")
   .option("-d, --distPath <path>", "Path to the dist folder (overrides config)")
   .option("-p, --port <number>", "Port to listen on (overrides config)")
-  .action(async (cmdOptions: { distPath?: string; port?: string }) => {
-    const { resolvedConfig } = await loadConfig();
+  .option("--max-age <number>", "Cache-Control max-age in milliseconds")
+  .action(
+    async (cmdOptions: {
+      distPath?: string;
+      port?: string;
+      maxAge?: string;
+    }) => {
+      const { resolvedConfig } = await loadConfig();
 
-    const portInput = cmdOptions.port ?? resolvedConfig.port.toString();
-    const port = parseInt(portInput, 10);
+      const portInput = cmdOptions.port ?? resolvedConfig.port.toString();
+      const port = parseInt(portInput, 10);
 
-    if (isNaN(port)) {
-      console.error(`Invalid port number provided: ${portInput}`);
-      process.exit(1);
+      if (isNaN(port)) {
+        console.error(`Invalid port number provided: ${portInput}`);
+        process.exit(1);
+      }
+
+      // Determine maxAge: CLI > config > default
+      let maxAge: number;
+      if (cmdOptions.maxAge) {
+        // CLI option takes highest priority
+        maxAge = parseInt(cmdOptions.maxAge, 10);
+        if (isNaN(maxAge)) {
+          console.error(
+            `Invalid max-age number provided via CLI: ${cmdOptions.maxAge}`
+          );
+          process.exit(1);
+        }
+      } else {
+        // Config file value is next priority
+        maxAge = resolvedConfig.maxAge;
+        if (typeof maxAge !== "number" || isNaN(maxAge)) {
+          console.error(
+            `Invalid max-age number provided in config file: ${resolvedConfig.maxAge}`
+          );
+          process.exit(1);
+        }
+      }
+
+      let distPath: string;
+      if (cmdOptions.distPath) {
+        distPath = path.resolve(process.cwd(), cmdOptions.distPath);
+      } else {
+        const absoluteRoot = path.resolve(process.cwd(), resolvedConfig.root);
+        distPath = path.resolve(absoluteRoot, resolvedConfig.output);
+      }
+
+      console.log(`Serving project from ${distPath} on port ${port}...`);
+      await serve({ distPath, port, maxAge });
     }
-
-    let distPath: string;
-    if (cmdOptions.distPath) {
-      distPath = path.resolve(process.cwd(), cmdOptions.distPath);
-    } else {
-      const absoluteRoot = path.resolve(process.cwd(), resolvedConfig.root);
-      distPath = path.resolve(absoluteRoot, resolvedConfig.output);
-    }
-
-    console.log(`Serving project from ${distPath} on port ${port}...`);
-    await serve({ distPath, port });
-  });
+  );
 
 program.parse(process.argv);

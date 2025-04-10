@@ -2,13 +2,12 @@ import { pathToFileURL } from "node:url";
 import express, { Router } from "express";
 import path from "path";
 
-export async function serve({
-  distPath,
-  port,
-}: {
+export async function serve(options: {
   distPath: string;
   port: number;
+  maxAge: number;
 }) {
+  const { distPath, port, maxAge } = options;
   const serverEntryPath = path.resolve(
     process.cwd(),
     distPath,
@@ -26,5 +25,10 @@ export async function serve({
   });
 
   app.use("/api", api);
-  app.use(express.static(clientStaticPath, { maxAge: 300_000 })); // 5 min cache
+
+  const headers = { maxAge };
+  app.use(express.static(clientStaticPath, headers));
+  app.use((req, res) =>
+    res.sendFile(path.join(clientStaticPath, "index.html"), headers)
+  );
 }

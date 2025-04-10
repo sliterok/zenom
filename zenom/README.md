@@ -43,10 +43,11 @@ The `zenom` CLI provides the following commands:
   - Serves the previously built production assets.
   - Loads configuration from `spa.config.js` or `spa.config.mjs` to determine defaults.
   - Useful for previewing the production build locally.
-  - **Configuration Precedence:** Command-line options (`--distPath`, `--port`) override settings defined in the configuration file.
+  - **Configuration Precedence:** Command-line options (`--distPath`, `--port`, `--max-age`) override settings defined in the configuration file. The configuration file settings override the built-in defaults.
   - **Options:**
     - `-d, --distPath <path>`: Specifies the path to the distribution folder containing the built client assets. If not provided, it defaults to the resolved output path calculated from the configuration (`<resolved_root>/<resolved_output>/client`).
     - `-p, --port <number>`: Specifies the port to listen on. If not provided, it defaults to the `port` value in the configuration file (which itself defaults to `3000`).
+    - `--max-age <number>`: Specifies the `Cache-Control: public, max-age=<value>` header value in **milliseconds** for serving static assets. If not provided, it defaults to the `maxAge` value in the configuration file (which itself defaults to `300000` milliseconds, or 5 minutes).
 
 ## Usage Example (within a project)
 
@@ -233,6 +234,7 @@ You can configure Zenom by creating a `spa.config.js` or `spa.config.mjs` file i
 - `root`: `./`
 - `output`: `./dist`
 - `port`: `3000`
+- `maxAge`: `300000` (milliseconds)
 
 **Configuration Structure:**
 
@@ -246,6 +248,7 @@ export default defineConfig({
   root: "./", // Project root directory containing 'client' and 'server' folders. Default: './'.
   output: "./dist", // Output directory relative to the root for build artifacts. Default: './dist'.
   port: 3000, // Port for the client development server. The server/API dev server runs on port + 1. Default: 3000.
+  maxAge: 600000, // Optional: Cache-Control max-age in milliseconds for the serve command. Default: 300000 (5 minutes).
   backendConfig: {
     /* ViteUserConfig */
   }, // Optional: Vite configuration overrides merged with Zenom's base server config.
@@ -259,7 +262,8 @@ export default defineConfig({
 
 - **`root`**: The base directory for your project, expected to contain `client` and `server` subdirectories. Paths within the configuration (like `output`) and Vite configurations are often resolved relative to this root.
 - **`output`**: The directory where built assets will be placed, relative to the `root`. The final output will be structured like `<output>/client` and `<output>/server`.
-- **`port`**: The port used by the Vite development server for the client. The API server (also managed by Vite during development via `vite-plugin-node`) will run on `port + 1`. The client dev server is automatically configured to proxy `/api` requests to this API server.
+- **`port`**: The port used by the Vite development server for the client. The API server (also managed by Vite during development via `vite-plugin-node`) will run on `port + 1`. The client dev server is automatically configured to proxy `/api` requests to this API server. This port is also the default for the `zenom serve` command.
+- **`maxAge`**: (Optional) Sets the default `Cache-Control: public, max-age=<value>` header value in **milliseconds** when using the `zenom serve` command. This can be overridden by the `--max-age` command-line option. Defaults to `300000`.
 - **`backendConfig` / `frontendConfig`**: Allow you to provide specific Vite configuration options that will be deeply merged with Zenom's default Vite settings for the server and client builds, respectively. This allows customization of plugins, build options, server settings, etc.
 
 **`defineConfig` Helper:**

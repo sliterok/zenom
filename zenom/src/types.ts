@@ -8,6 +8,7 @@ export interface SpaConfig {
   backendConfig?: ViteUserConfig; // Vite config overrides for the server
   frontendConfig?: ViteUserConfig; // Vite config overrides for the client
   port?: number; // Default: 3000 (for dev server)
+  maxAge?: number; // Default: 300_000 (for serve command Cache-Control header)
 }
 
 export interface IBuildResult {

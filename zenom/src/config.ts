@@ -9,6 +9,7 @@ import express, { Router } from "express";
 const DEFAULT_ROOT = "./";
 const DEFAULT_OUTPUT = "./dist";
 const DEFAULT_PORT = 3000;
+const DEFAULT_MAXAGE = 300_000; // 5 min
 
 export async function loadConfig() {
   const possibleConfigFiles = ["spa.config.js", "spa.config.mjs"];
@@ -43,6 +44,7 @@ export async function loadConfig() {
     port: loadedUserConfig.port ?? DEFAULT_PORT,
     backendConfig: loadedUserConfig.backendConfig ?? {},
     frontendConfig: loadedUserConfig.frontendConfig ?? {},
+    maxAge: loadedUserConfig.maxAge ?? DEFAULT_MAXAGE,
   };
 
   const absoluteRoot = path.resolve(process.cwd(), resolvedConfig.root);
