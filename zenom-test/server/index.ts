@@ -1,9 +1,9 @@
 import express from "express";
 import { IUser } from "../types";
 
-export const app = express();
+export const router = express.Router();
 
-app.get("/api", (req, res) => {
+router.get("/", (req, res) => {
   const u: IUser = {
     a: 1,
     b: 2,

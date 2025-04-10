@@ -6,4 +6,5 @@ export default defineConfig({
   platform: "neutral",
   dts: true,
   bundle: true,
+  clean: true,
 });

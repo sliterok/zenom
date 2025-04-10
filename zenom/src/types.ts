@@ -1,13 +1,13 @@
 import { RollupOutput } from "rollup";
-import type { OutputOptions } from "rollup";
+import type { UserConfig as ViteUserConfig } from "vite"; // Import Vite's UserConfig
 
-export interface IOptions {
-  overrideInputPath?: string;
-  overrideOutputPath?: string;
-}
-
-export interface ServeOptions {
-  distPath: string;
+// Defines the structure of the spa.config.js file
+export interface SpaConfig {
+  root?: string; // Default: './'
+  output?: string; // Default: './dist' (relative to root)
+  backendConfig?: ViteUserConfig; // Vite config overrides for the server
+  frontendConfig?: ViteUserConfig; // Vite config overrides for the client
+  port?: number; // Default: 3000 (for dev server)
 }
 
 export interface IBuildResult {

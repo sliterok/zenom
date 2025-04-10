@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import { Command } from "commander";
+import path from "path";
 import { dev } from "./dev.js";
-import { build, serve } from "./build.js";
+import { build } from "./build.js";
+import { serve } from "./serve.js";
 import { loadConfig } from "./config.js";
-import type { ServeOptions } from "./types.js"; // Assuming types are defined here
 
 const program = new Command();
 program
@@ -27,11 +28,29 @@ program
 program
   .command("serve")
   .description("Serve the built project")
-  .option("-d, --distPath <path>", "Path to the dist folder", "./dist")
-  .action(async (options: ServeOptions) => {
-    // Added type annotation
-    console.log("Serving project...");
-    await serve(options.distPath);
+  .option("-d, --distPath <path>", "Path to the dist folder (overrides config)")
+  .option("-p, --port <number>", "Port to listen on (overrides config)")
+  .action(async (cmdOptions: { distPath?: string; port?: string }) => {
+    const { resolvedConfig } = await loadConfig();
+
+    const portInput = cmdOptions.port ?? resolvedConfig.port.toString();
+    const port = parseInt(portInput, 10);
+
+    if (isNaN(port)) {
+      console.error(`Invalid port number provided: ${portInput}`);
+      process.exit(1);
+    }
+
+    let distPath: string;
+    if (cmdOptions.distPath) {
+      distPath = path.resolve(process.cwd(), cmdOptions.distPath);
+    } else {
+      const absoluteRoot = path.resolve(process.cwd(), resolvedConfig.root);
+      distPath = path.resolve(absoluteRoot, resolvedConfig.output);
+    }
+
+    console.log(`Serving project from ${distPath} on port ${port}...`);
+    await serve({ distPath, port });
   });
 
 program.parse(process.argv);
