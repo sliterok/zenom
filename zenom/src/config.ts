@@ -88,6 +88,7 @@ export async function loadConfig() {
         },
         appPath: "index.ts",
         exportName: "router",
+        outputFormat: "module",
       }),
     ] as any,
     server: {

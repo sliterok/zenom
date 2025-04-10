@@ -11,7 +11,7 @@ export async function serve(options: {
   const serverEntryPath = path.resolve(
     process.cwd(),
     distPath,
-    "server/index.cjs"
+    "server/index.js"
   );
   const clientStaticPath = path.resolve(process.cwd(), distPath, "client");
 
