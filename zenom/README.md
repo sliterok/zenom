@@ -9,7 +9,7 @@ This package contains the core Zenom framework, a toolchain designed for buildin
 - Static file serving for built applications.
 - Configuration loading (`zenom.config.js` or `zenom.config.ts`).
 
-<img src="https://github.com/sliterok/zenom/blob/main/zenom/workflow.jpg?raw=true" width="25%">
+<img src="https://github.com/sliterok/zenom/blob/main/zenom/workflow.jpg?raw=true" width="300px">
 
 ## Installation
 
@@ -35,7 +35,7 @@ The `zenom` CLI provides the following commands:
   - Enables HMR for a fast development experience.
   - Sets up a proxy for client requests to `/api` to be forwarded to the backend server during development.
 
-<img src="https://github.com/sliterok/zenom/blob/main/zenom/dev.jpg?raw=true" width="25%">
+<img src="https://github.com/sliterok/zenom/blob/main/zenom/dev.jpg?raw=true" width="400px">
 
 - **`zenom build`**
 
@@ -53,7 +53,7 @@ The `zenom` CLI provides the following commands:
     - `-p, --port <number>`: Specifies the port to listen on. If not provided, it defaults to the `port` value in the configuration file (which itself defaults to `3000`).
     - `--max-age <number>`: Specifies the `Cache-Control: public, max-age=<value>` header value in **milliseconds** for serving static assets. If not provided, it defaults to the `maxAge` value in the configuration file (which itself defaults to `300000` milliseconds, or 5 minutes).
 
-<img src="https://github.com/sliterok/zenom/blob/main/zenom/build.jpg?raw=true" width="25%">
+<img src="https://github.com/sliterok/zenom/blob/main/zenom/build.jpg?raw=true" width="400px">
 
 ## Usage Example (within a project)
 
