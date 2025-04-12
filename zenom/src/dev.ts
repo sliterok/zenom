@@ -1,12 +1,8 @@
 import { type InlineConfig, createServer, ViteDevServer } from "vite";
-
-interface DevConfig {
-  clientConfig: InlineConfig;
-  serverConfig: InlineConfig;
-}
+import { IMergedConfig } from "./types";
 
 export async function dev(
-  config: DevConfig
+  config: IMergedConfig
 ): Promise<{ clientServer: ViteDevServer; apiServer: ViteDevServer }> {
   const { clientConfig, serverConfig } = config;
 

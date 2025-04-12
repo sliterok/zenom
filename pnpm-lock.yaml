@@ -13,6 +13,9 @@ importers:
       '@vitejs/plugin-react-swc':
         specifier: ^3.8.1
         version: 3.8.1(vite@6.2.5)
+      color-loggers:
+        specifier: ^0.3.2
+        version: 0.3.2
       commander:
         specifier: ^13.1.0
         version: 13.1.0
@@ -820,6 +823,10 @@ packages:
     engines: {node: '>=7.0.0'}
     dependencies:
       color-name: 1.1.4
+
+  /color-loggers@0.3.2:
+    resolution: {integrity: sha512-asfXyY1/9N+Cxt30jb0PFy5tccybuMnWVc9J8EJuYoJVlcsUshn+pt2QuyUB3BWKMXVvEH8jgLrCFs11Am8QZA==}
+    dev: false
 
   /color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}

@@ -1,12 +1,10 @@
 import { pathToFileURL } from "node:url";
 import express, { Router } from "express";
 import path from "path";
+import { IServeConfig } from "./types";
+import { success } from "./log";
 
-export async function serve(options: {
-  distPath: string;
-  port: number;
-  maxAge: number;
-}) {
+export async function serve(options: IServeConfig) {
   const { distPath, port, maxAge } = options;
   const serverEntryPath = path.resolve(
     process.cwd(),
@@ -20,9 +18,7 @@ export async function serve(options: {
   const api = backend.router as Router;
 
   const app = express();
-  app.listen(port, () => {
-    console.info(`HTTP Server listening on http://0.0.0.0:${port}...`);
-  });
+  app.listen(port, () => success.log(`Listening on http://0.0.0.0:${port}...`));
 
   app.use("/api", api);
 

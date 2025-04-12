@@ -5,6 +5,7 @@ import { dev } from "./dev.js";
 import { build } from "./build.js";
 import { serve } from "./serve.js";
 import { loadConfig } from "./config.js";
+import { success, info, error } from "./log.js";
 
 const program = new Command();
 program
@@ -12,8 +13,14 @@ program
   .description("Start development server")
   .action(async () => {
     const config = await loadConfig();
-    console.log("Starting development server...");
     await dev(config);
+    const clientServer = config.clientConfig.server;
+    const clientUrl = `http://${clientServer?.host}:${clientServer?.port}`;
+    success.log(`Client running on ${clientUrl}`);
+
+    const apiServer = config.serverConfig.server;
+    const apiUrl = `http://${apiServer?.host}:${apiServer?.port}`;
+    success.log(`API server running on ${apiUrl} (${clientUrl}/api)`);
   });
 
 program
@@ -21,8 +28,9 @@ program
   .description("Build the project")
   .action(async () => {
     const config = await loadConfig();
-    console.log("Building project...");
+    info.log("Building project...");
     await build(config);
+    success.log(`Build finished`);
   });
 
 program
@@ -43,7 +51,7 @@ program
       const port = parseInt(portInput, 10);
 
       if (isNaN(port)) {
-        console.error(`Invalid port number provided: ${portInput}`);
+        error.log(`Invalid port number provided: ${portInput}`);
         process.exit(1);
       }
 
@@ -53,7 +61,7 @@ program
         // CLI option takes highest priority
         maxAge = parseInt(cmdOptions.maxAge, 10);
         if (isNaN(maxAge)) {
-          console.error(
+          error.log(
             `Invalid max-age number provided via CLI: ${cmdOptions.maxAge}`
           );
           process.exit(1);
@@ -62,7 +70,7 @@ program
         // Config file value is next priority
         maxAge = resolvedConfig.maxAge;
         if (typeof maxAge !== "number" || isNaN(maxAge)) {
-          console.error(
+          error.log(
             `Invalid max-age number provided in config file: ${resolvedConfig.maxAge}`
           );
           process.exit(1);
@@ -77,7 +85,6 @@ program
         distPath = path.resolve(absoluteRoot, resolvedConfig.output);
       }
 
-      console.log(`Serving project from ${distPath} on port ${port}...`);
       await serve({ distPath, port, maxAge });
     }
   );

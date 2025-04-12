@@ -1,13 +1,8 @@
-import { build as viteBuild, type InlineConfig } from "vite";
+import { build as viteBuild } from "vite";
 import { type RollupOutput } from "rollup";
-import { IBuildResult } from "./types";
+import { IBuildResult, IMergedConfig } from "./types";
 
-interface BuildConfig {
-  clientConfig: InlineConfig;
-  serverConfig: InlineConfig;
-}
-
-export async function build(config: BuildConfig): Promise<IBuildResult> {
+export async function build(config: IMergedConfig): Promise<IBuildResult> {
   const { clientConfig, serverConfig } = config;
 
   const [clientOutput, serverOutput] = (await Promise.all([

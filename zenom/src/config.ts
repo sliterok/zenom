@@ -2,18 +2,20 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import fs from "fs/promises";
 import { InlineConfig, mergeConfig } from "vite";
-import { SpaConfig } from "./types";
+import { IMergedConfig, ISpaConfig } from "./types";
 import { VitePluginNode } from "vite-plugin-node";
 import express, { Router } from "express";
+import { error, info, success } from "./log";
 
 const DEFAULT_ROOT = "./";
 const DEFAULT_OUTPUT = "./dist";
+const DEFAULT_HOST = "localhost";
 const DEFAULT_PORT = 3000;
 const DEFAULT_MAXAGE = 300_000; // 5 min
 
-export async function loadConfig() {
+export async function loadConfig(): Promise<IMergedConfig> {
   const possibleConfigFiles = ["spa.config.js", "spa.config.mjs"];
-  let loadedUserConfig: Partial<SpaConfig> = {};
+  let loadedUserConfig: Partial<ISpaConfig> = {};
   let foundConfigFile = false;
 
   for (const configFile of possibleConfigFiles) {
@@ -23,24 +25,26 @@ export async function loadConfig() {
       const importedConfig = await import(`file://${configPath}`);
       loadedUserConfig = importedConfig.default || importedConfig;
       foundConfigFile = true;
-      console.log(`Loaded configuration from ${configFile}`);
+      info.log(`Loaded configuration from ${configFile}`);
       break;
-    } catch (error: any) {
-      if (error.code !== "ENOENT") {
-        console.error(`Error loading config file ${configFile}:`, error);
+    } catch (err: any) {
+      if (err.code !== "ENOENT") {
+        error.log(`Error loading config file ${configFile}`);
+        console.error(err);
       }
     }
   }
 
   if (!foundConfigFile) {
-    console.log(
+    info.log(
       "No spa.config.js or spa.config.mjs found. Using default configuration."
     );
   }
 
-  const resolvedConfig: Required<SpaConfig> = {
+  const resolvedConfig: Required<ISpaConfig> = {
     root: loadedUserConfig.root ?? DEFAULT_ROOT,
     output: loadedUserConfig.output ?? DEFAULT_OUTPUT,
+    host: loadedUserConfig.host ?? DEFAULT_HOST,
     port: loadedUserConfig.port ?? DEFAULT_PORT,
     backendConfig: loadedUserConfig.backendConfig ?? {},
     frontendConfig: loadedUserConfig.frontendConfig ?? {},
@@ -58,6 +62,7 @@ export async function loadConfig() {
     },
     plugins: [react()] as any,
     server: {
+      host: resolvedConfig.host,
       port: resolvedConfig.port,
       proxy: {
         "/api": `http://localhost:${resolvedConfig.port + 1}`,
@@ -92,6 +97,7 @@ export async function loadConfig() {
       }),
     ] as any,
     server: {
+      host: "localhost",
       port: resolvedConfig.port + 1,
     },
   };
@@ -104,6 +110,6 @@ export async function loadConfig() {
   return { clientConfig, serverConfig, resolvedConfig };
 }
 
-export function defineConfig(config: SpaConfig): SpaConfig {
+export function defineConfig(config: ISpaConfig): ISpaConfig {
   return config;
 }

@@ -1,6 +1,6 @@
 {
   "name": "zenom",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "",
   "main": "./dist/index.js",
   "bin": {
@@ -36,11 +36,12 @@
     "react-dom": "^19.1.0"
   },
   "dependencies": {
-    "commander": "^13.1.0",
-    "vite": "^6.2.5",
-    "vite-plugin-node": "^5.0.0",
     "@vitejs/plugin-react-swc": "^3.8.1",
-    "express": "^5.1.0"
+    "color-loggers": "^0.3.2",
+    "commander": "^13.1.0",
+    "express": "^5.1.0",
+    "vite": "^6.2.5",
+    "vite-plugin-node": "^5.0.0"
   },
   "files": [
     "dist"
